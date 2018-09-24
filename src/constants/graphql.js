@@ -16,3 +16,18 @@ export const ALL_POSTS = gql`
     }
 `
 
+// IDで1件取得
+export const FEACH_POST_BY_ID = gql`
+    query feachPostById($id: ID!) {
+        post(where: { id: $id }) {
+            title
+            content
+            description
+            createdAt
+            thumbnail {
+                url
+            }
+        }
+    }
+`
+

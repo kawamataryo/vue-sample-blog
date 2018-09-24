@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import {FEACH_POST_BY_ID} from "../components/graphql";
+  import {FEACH_POST_BY_ID} from "../constants/graphql";
 
   export default {
     name: 'PostDetail',
