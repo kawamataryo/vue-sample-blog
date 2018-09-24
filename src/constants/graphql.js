@@ -31,3 +31,18 @@ export const FEACH_POST_BY_ID = gql`
     }
 `
 
+// ページ単位で取得
+export const FEACH_POST_BY_PAGE =gql`
+  query feachPostByPage($page: Int) {
+      posts(first:6, skip: $page, orderBy: createdAt_DESC) {
+          id
+          title
+          content
+          description
+          createdAt
+          thumbnail {
+              url
+          }
+      }
+  }
+`
