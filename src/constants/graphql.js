@@ -32,17 +32,28 @@ export const FEACH_POST_BY_ID = gql`
 `
 
 // ページ単位で取得
-export const FEACH_POST_BY_PAGE =gql`
-  query feachPostByPage($page: Int) {
-      posts(first:6, skip: $page, orderBy: createdAt_DESC) {
-          id
-          title
-          content
-          description
-          createdAt
-          thumbnail {
-              url
-          }
-      }
-  }
+export const FEACH_POST_BY_PAGE = gql`
+    query feachPostByPage($displayUnit: Int, $page: Int) {
+        posts(first: $displayUnit, skip: $page, orderBy: createdAt_DESC) {
+            id
+            title
+            content
+            description
+            createdAt
+            thumbnail {
+                url
+            }
+        }
+    }
+`
+
+// postモデルのレコード数を取得
+export const MAX_POST_COUNT = gql`
+    query maxPostCount{
+        postsConnection {
+            aggregate {
+                count
+            }
+        }
+    }
 `
