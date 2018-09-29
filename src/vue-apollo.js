@@ -28,6 +28,7 @@ const defaultOptions = {
   // Is being rendered on the server?
   ssr: false,
 
+
   // Override default http link
   // link: myLink
 
@@ -60,6 +61,7 @@ export function createProvider (options = {}) {
       $query: {
         // fetchPolicy: 'cache-and-network',
       },
+      $loadingKey: 'loading'
     },
     errorHandler (error) {
       // eslint-disable-next-line no-console

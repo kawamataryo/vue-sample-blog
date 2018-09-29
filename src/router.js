@@ -11,6 +11,11 @@ const routes = [
     component: () => import('./views/PostList.vue')
   },
   {
+    path: '/PagingDemo',
+    name: "PagingDemo",
+    component: () => import('./views/PagingDemo.vue')
+  },
+  {
     path: '/post/:id',
     name: "PostDetail",
     component: () => import('./views/PostDetail.vue')

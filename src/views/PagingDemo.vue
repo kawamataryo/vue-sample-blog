@@ -1,14 +1,23 @@
 <template>
   <div>
-    <HomeMainVisual/>
     <v-container grid-list-xl>
-      <v-layout row wrap>
+      <!-- ローディングアイコン-->
+      <div class="text-xs-center" v-if="loading">
+        <v-progress-circular
+            :size="50"
+            color="primary"
+            indeterminate
+        ></v-progress-circular>
+      </div>
+      <!--投稿一覧-->
+      <v-layout row wrap v-if="!loading">
         <PostCard
             v-for="post in posts"
             v-bind:key="post.id"
             :post=post
         ></PostCard>
       </v-layout>
+      <!--ページネーション-->
       <div class="text-xs-center mt-5">
         <v-pagination
             v-model="pageNumber"
@@ -31,33 +40,41 @@
       HomeMainVisual
     },
     data: () => ({
-      pageNumber: 1,
-      pageDisplayUnit: 6,
-      maxPostCount: 0,
-      posts: [],
-      num: 0,
+      pageNumber: 1, // 表示するページ番号
+      pageDisplayUnit: 3, // 1ページの表示件数
+      maxPostCount: 0, // 投稿総数（初期化で0）
+      posts: [], // 投稿一覧
+      loading: 0, // 通信の状態 apolloで制御
     }),
     mounted() {
-      let page = this.$route.query.page
-      this.pageNumber = page != null ? parseInt(page) : 1
+      // マウント後に、vue-routerでクエリーパラムを取得
+      // 取得したクエリーパラムを表示ページに設定
+      let queryPage = this.$route.query.page
+      this.pageNumber = queryPage != null ? parseInt(queryPage) : 1
+    },
+    watch: {
+      // watchでpageNumberの状態を監視
+      // pageNumberがページネーションのクリックで変化したときに、
+      // vue-routerでページを変化させる
+      pageNumber: function (newNumber) {
+        this.$router.push({name: 'PagingDemo', query: {page: newNumber}})
+      }
     },
     computed: {
+      // 投稿総数を、1ページの表示件数で割ることで総ページ数を計算
       pageLength: function () {
         return Math.ceil(this.maxPostCount / this.pageDisplayUnit)
       }
     },
-    watch: {
-      pageNumber: function (newNumber) {
-        this.$router.push({ name: 'PostList', query: { page: newNumber }})
-      }
-    },
     apollo: {
+      // 投稿総数の取得
       maxPostCount: {
         query: MAX_POST_COUNT,
         update(data) {
           return data.postsConnection.aggregate.count
         }
       },
+      // ページごとの投稿を取得
       posts: {
         query: FEACH_POST_BY_PAGE,
         variables() {

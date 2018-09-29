@@ -1,4 +1,7 @@
-# sample-blog
+# GraphCMSとvue.jsの練習用リポジトリ
+
+こちらのqiita記事とリンクしています。
+
 
 ## Project setup
 ```
