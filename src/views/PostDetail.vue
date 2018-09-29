@@ -33,6 +33,7 @@
   export default {
     name: 'PostDetail',
     data: () => ({
+      loading: 0,
       post: {
         title: "",
         description:"",

@@ -3,7 +3,9 @@
     <v-toolbar
         app
     >
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <router-link to="/" class="black--text">
+        <v-toolbar-title v-text="title"></v-toolbar-title>
+      </router-link>
       <v-spacer></v-spacer>
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>fa-bars</v-icon>
@@ -13,7 +15,6 @@
         temporary
         :right=true
         v-model="rightDrawer"
-        fixed
         app
     >
       <v-list>
@@ -42,7 +43,6 @@
 <script>
   export default {
     name: "Navbar",
-
     data() {
       return {
         title: "Sample Blog",

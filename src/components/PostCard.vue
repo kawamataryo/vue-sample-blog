@@ -6,14 +6,14 @@
             slot-scope="{ hover }"
             :class="`elevation-${hover ? 12 : 2}`"
         >
-          <a v-bind:href="'/post/' + post.id">
+          <router-link :to="'/post/' + post.id">
             <v-img
                 class="white--text"
                 height="170px"
                 :src=post.thumbnail.url
             >
             </v-img>
-          </a>
+          </router-link>
           <v-card-title>
             <div>
               <h2>{{ post.title }}</h2>

@@ -39,10 +39,10 @@
     },
     data: () => ({
       pageNumber: 1,
-      pageDisplayUnit: 20,
+      pageDisplayUnit: 12,
       maxPostCount: 0,
       posts: [],
-      num: 0,
+      loading: 0,
     }),
     mounted() {
       let page = this.$route.query.page
