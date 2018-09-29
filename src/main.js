@@ -5,6 +5,7 @@ import App from './App.vue'
 import { createProvider } from './vue-apollo'
 import router from "./router"
 
+
 Vue.config.productionTip = false
 
 new Vue({

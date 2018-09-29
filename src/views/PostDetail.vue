@@ -17,7 +17,7 @@
       <v-container>
         <v-layout row wrap justify-center>
           <v-flex xs12 md8>
-            <p>{{ post.content }}</p>
+            <vue-markdown  :source="post.content"></vue-markdown>
           </v-flex>
         </v-layout>
       </v-container>
@@ -27,11 +27,20 @@
 
 <script>
   import {FEACH_POST_BY_ID} from "../constants/graphql";
+  import VueMarkdown from 'vue-markdown'
+
 
   export default {
     name: 'PostDetail',
     data: () => ({
-      post: []
+      post: {
+        title: "",
+        description:"",
+        content: "",
+        thumbnail: {
+          url: "",
+        }
+      }
     }),
     apollo: {
       post: {
@@ -42,7 +51,10 @@
           }
         },
       }
-    }
+    },
+    components: {
+      VueMarkdown
+    },
   }
 </script>
 
