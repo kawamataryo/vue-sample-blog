@@ -2,6 +2,7 @@
   <header>
     <v-toolbar
         app
+        inverted-scroll="true"
     >
       <router-link to="/" class="black--text">
         <v-toolbar-title v-text="title"></v-toolbar-title>
@@ -52,8 +53,3 @@
   }
 </script>
 
-<style scoped>
-  header {
-    height: 56px;
-  }
-</style>
