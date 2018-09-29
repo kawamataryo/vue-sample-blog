@@ -2,6 +2,13 @@
   <div>
     <HomeMainVisual/>
     <v-container grid-list-xl>
+      <div class="text-xs-center" v-if="loading">
+        <v-progress-circular
+            :size="50"
+            color="primary"
+            indeterminate
+        ></v-progress-circular>
+      </div>
       <v-layout row wrap>
         <PostCard
             v-for="post in posts"
@@ -32,7 +39,7 @@
     },
     data: () => ({
       pageNumber: 1,
-      pageDisplayUnit: 6,
+      pageDisplayUnit: 20,
       maxPostCount: 0,
       posts: [],
       num: 0,
