@@ -17,7 +17,7 @@
           <v-card-title>
             <div>
               <h2>{{ post.title }}</h2>
-              <span class="grey--text">{{ post.createdAt}}</span><br>
+              <span class="grey--text">{{ post.createdAt | moment("YYYY-MM-DD") }}</span><br>
               <span>{{ post.description }}</span>
             </div>
           </v-card-title>
