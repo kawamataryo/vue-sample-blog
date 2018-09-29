@@ -1,0 +1,50 @@
+enum Status {
+    DRAFT
+    PUBLISHED
+    ARCHIVED
+}
+
+#Asset system model
+type Asset {
+    #The status of the record
+    status: Status!
+    id: ID!
+    createdAt: DateTime!#The time the record was updated
+    updatedAt: DateTime!#The file handle
+    handle: String!
+    fileName: String!#The height of the file
+    height: Float#The mime type of the file
+    mimeType: String#The file size
+    size: Float#The file width
+    width: Float
+    thumbnailPost: [Post!]!
+}
+
+#Color system model
+type Color {
+    #The unique identifier
+    id: ID!
+    createdAt: DateTime!#The time the record was updated
+    updatedAt: DateTime!
+}
+
+#Location system model
+type Location {
+    #The unique identifier
+    id: ID!
+    createdAt: DateTime!#The time the record was updated
+    updatedAt: DateTime!
+}
+
+#sample blog post
+type Post {
+    #The status of the record
+    status: Status!
+    id: ID!
+    createdAt: DateTime!#The time the record was updated
+    updatedAt: DateTime!
+    title: String
+    description: String
+    content: String
+    thumbnail: Asset
+}
