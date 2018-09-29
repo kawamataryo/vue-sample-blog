@@ -20,11 +20,6 @@ const routes = [
     name: "PostDetail",
     component: () => import('./views/PostDetail.vue')
   },
-  {
-    path: '/addPost',
-    name: "AddPost",
-    component: () => import('./views/AddPost.vue')
-  },
 ]
 
 const router = new VueRouter({
