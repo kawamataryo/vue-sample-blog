@@ -31,7 +31,7 @@
 <script>
   import HomeMainVisual from '../components/HomeMainVisual'
   import PostCard from '../components/PostCard'
-  import {FEACH_POST_BY_PAGE, MAX_POST_COUNT} from "../constants/graphql"
+  import {FEACH_POST_BY_PAGE, MAX_POST_COUNT} from "../constants/post-graphql.js"
 
   export default {
     name: "PostList",
