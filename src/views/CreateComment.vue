@@ -35,7 +35,7 @@
                 ></v-textarea>
                 <v-btn
                     :disabled="!valid"
-                    @click="createPost"
+                    @click="createComment"
                 >
                   submit
                 </v-btn>
@@ -61,6 +61,19 @@
         <td>{{ props.item.createdAt | moment("YYYY-MM-DD HH:MM:SS") }}</td>
         <td class="text-xs-right">{{ props.item.title }}</td>
         <td class="text-xs-right">{{ props.item.contents }}</td>
+        <td class="justify-center layout px-0">
+          <v-btn
+              color="error"
+              small
+              outline
+              flat
+              @click="deleteComment(props.item.id)"
+          >
+            <v-icon small>
+              fa-trash
+            </v-icon>
+          </v-btn>
+        </td>
       </template>
     </v-data-table>
 
@@ -68,7 +81,7 @@
 </template>
 
 <script>
-  import {ALL_COMMENTS, CREATE_COMMENT} from "../constants/comment-graphql";
+  import {ALL_COMMENTS, CREATE_COMMENT, DELETE_COMMENT} from "../constants/comment-graphql";
 
   export default {
     name: "CreatePost",
@@ -87,14 +100,15 @@
       headers: [
         {text: 'createdAt', value: 'createdAt'},
         {text: 'title', value: 'title'},
-        {text: 'contents', value: 'contents'}
+        {text: 'contents', value: 'contents'},
+        {text: 'Actions', value: 'name', sortable: false}
       ],
       error: "desu",
       progress: false,
       alertDisplay: false,
     }),
     methods: {
-      createPost: function () {
+      createComment: function () {
         if (this.$refs.form.validate()) {
           this.progress = true
           this.$apollo.mutate({
@@ -103,21 +117,44 @@
               title: this.title,
               contents: this.contents,
             }
-          }).then((data) => {
+          }).then(() => {
             this.$apollo.queries.comments.fetchMore({
               updateQuery: (previousResult, {fetchMoreResult}) => {
                 this.clear()
                 this.showAlert()
-                this.progress = false
                 return {
                   comments: fetchMoreResult.comments
                 }
               }
             })
+            this.progress = false
           }).catch((error) => {
             this.error = error
           })
         }
+      },
+      deleteComment: function (id) {
+        if(!confirm('Are you sure you want to delete this comment?')) {
+          return
+        }
+        this.progress = true
+        this.$apollo.mutate({
+          mutation: DELETE_COMMENT,
+          variables: {
+            id: id
+          }
+        }).then(() => {
+          this.$apollo.queries.comments.fetchMore({
+            updateQuery: (previousResult, {fetchMoreResult}) => {
+              return {
+                comments: fetchMoreResult.comments
+              }
+            }
+          })
+          this.progress = false
+        }).catch((error) => {
+          this.error = error
+        })
       },
       clear: function () {
         this.$refs.form.reset()
