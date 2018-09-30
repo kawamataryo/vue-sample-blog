@@ -2,7 +2,7 @@
   <header>
     <v-toolbar
         app
-        inverted-scroll="true"
+        inverted-scroll
     >
       <router-link to="/" class="black--text">
         <v-toolbar-title v-text="title"></v-toolbar-title>
@@ -28,6 +28,7 @@
           </v-list-tile-action>
           <v-list-tile-title>Home</v-list-tile-title>
         </v-list-tile>
+
         <v-list-tile
             to="/pagingDemo"
         >
@@ -36,7 +37,17 @@
           </v-list-tile-action>
           <v-list-tile-title>pagingDemo</v-list-tile-title>
         </v-list-tile>
+
+        <v-list-tile
+            to="/createComment"
+        >
+          <v-list-tile-action>
+            <v-icon>fa-comment</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-title>createComment</v-list-tile-title>
+        </v-list-tile>
       </v-list>
+
     </v-navigation-drawer>
   </header>
 </template>

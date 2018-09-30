@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 // すべての投稿を取得
 export const ALL_POSTS = gql`
     query allPosts {
-        posts {
+        posts(where: {status: PUBLISHED}) {
             id
             title
             content
@@ -34,7 +34,7 @@ export const FEACH_POST_BY_ID = gql`
 // ページ単位で取得
 export const FEACH_POST_BY_PAGE = gql`
     query feachPostByPage($displayUnit: Int, $page: Int) {
-        posts(first: $displayUnit, skip: $page, orderBy: createdAt_DESC) {
+        posts(first: $displayUnit, skip: $page, orderBy: createdAt_DESC where: {status: PUBLISHED}) {
             id
             title
             content
@@ -54,6 +54,17 @@ export const MAX_POST_COUNT = gql`
             aggregate {
                 count
             }
+        }
+    }
+`
+
+// postモデルのレコードの追加
+export const CREATE_POST = gql`
+    mutation createPost($title: String, $description: String, $content: String) {
+        createPost(data: {status: DRAFT, title: $title, description: $description, content: $content}) {
+            title: title
+            description: description
+            content: content
         }
     }
 `

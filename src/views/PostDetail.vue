@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import {FEACH_POST_BY_ID} from "../constants/graphql";
+  import {FEACH_POST_BY_ID} from "../constants/post-graphql.js";
   import VueMarkdown from 'vue-markdown'
 
 
