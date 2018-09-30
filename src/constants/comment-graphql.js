@@ -46,9 +46,19 @@ export const CREATE_COMMENT = gql`
 
 // commentモデルのレコード削除
 export const DELETE_COMMENT = gql`
-  mutation deleteComment($id: ID) {
-      deleteComment(where:{id: $id}){
-          id
-      } 
-  }
+    mutation deleteComment($id: ID) {
+        deleteComment(where:{id: $id}){
+            id
+        }
+    }
+`
+
+// commentモデルのレコード更新
+export const UPDATE_COMMENT = gql`
+    mutation updateComment($id: ID, $title: String, $contents: String) {
+        updateComment(data: {title: $title, contents: $contents}, where:{id:$id}) {
+            title
+            contents
+        }
+    }
 `
