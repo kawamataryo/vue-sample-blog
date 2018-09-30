@@ -20,6 +20,11 @@ const routes = [
     name: "PostDetail",
     component: () => import('./views/PostDetail.vue')
   },
+  {
+    path: '/createComment',
+    name: "CreateComment",
+    component: () => import('./views/CreateComment.vue')
+  },
 ]
 
 const router = new VueRouter({
