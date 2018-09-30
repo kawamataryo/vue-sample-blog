@@ -23,7 +23,7 @@ export const FEACH_COMMENT_BY_ID = gql`
     }
 `
 
-// postモデルのレコード数を取得
+// commentモデルのレコード数を取得
 export const MAX_COMMENT_COUNT = gql`
     query maxCommentCount{
         commentsConnection {
@@ -34,12 +34,21 @@ export const MAX_COMMENT_COUNT = gql`
     }
 `
 
-// postモデルのレコードの追加
+// commentモデルのレコードの追加
 export const CREATE_COMMENT = gql`
-    mutation createComments($title: String, $contents: String) {
+    mutation createComment($title: String, $contents: String) {
         createComment(data: {status: PUBLISHED, title: $title, contents: $contents}) {
             title: title
             contents: contents
         }
     }
+`
+
+// commentモデルのレコード削除
+export const DELETE_COMMENT = gql`
+  mutation deleteComment($id: ID) {
+      deleteComment(where:{id: $id}){
+          id
+      } 
+  }
 `
