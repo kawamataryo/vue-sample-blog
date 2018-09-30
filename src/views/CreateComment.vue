@@ -1,54 +1,47 @@
 <template>
   <v-container>
-    <v-layout row wrap>
-      <v-flex xs12 sm6 offset-sm3>
-        <section>
-          <!--アラート-->
-          <v-alert
-              :value="alertDisplay"
-              type="success"
-              transition="slide-y-transition"
-              outline
-          >
-            Comment was successful
-          </v-alert>
+    <!--コメントフォーム-->
+    <v-dialog v-model="dialog" max-width="500px">
+      <v-card>
+        <v-container>
+          <h1>CommentForm</h1>
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-text-field
+                v-model="title"
+                :rules="titleRules"
+                :counter="20"
+                label="Title"
+                required
+            ></v-text-field>
+            <v-textarea
+                v-model="contents"
+                :rules="contentsRules"
+                label="Contents"
+                required
+                flat
+                counter
+            ></v-textarea>
+            <v-btn
+                :disabled="!valid"
+                @click="createComment"
+            >
+              save
+            </v-btn>
+            <v-btn @click="clear">clear</v-btn>
+          </v-form>
+        </v-container>
+      </v-card>
+    </v-dialog>
 
-          <!--コメントフォーム-->
-          <v-card>
-            <v-container>
-              <h1>CommentForm</h1>
-              <v-form ref="form" v-model="valid" lazy-validation>
-                <v-text-field
-                    v-model="title"
-                    :rules="titleRules"
-                    :counter="20"
-                    label="Title"
-                    required
-                ></v-text-field>
-                <v-textarea
-                    v-model="contents"
-                    :rules="contentsRules"
-                    label="Contents"
-                    required
-                    flat
-                    counter
-                ></v-textarea>
-                <v-btn
-                    :disabled="!valid"
-                    @click="createComment"
-                >
-                  submit
-                </v-btn>
-                <v-btn @click="clear">clear</v-btn>
-              </v-form>
-            </v-container>
-          </v-card>
-        </section>
-      </v-flex>
-    </v-layout>
+
+    <!--ツールバー-->
+    <v-toolbar flat color="white">
+      <v-toolbar-title>CRUD demo</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn color="primary" dark class="mb-2" @click="showDialog">New Item</v-btn>
+    </v-toolbar>
 
     <!--コメント一覧-->
-
     <v-data-table
         :headers="headers"
         :items="comments"
@@ -62,6 +55,17 @@
         <td class="text-xs-right">{{ props.item.title }}</td>
         <td class="text-xs-right">{{ props.item.contents }}</td>
         <td class="justify-center layout px-0">
+          <v-btn
+              color="success"
+              small
+              outline
+              flat
+              @click="updateComment(props.item)"
+          >
+            <v-icon small>
+              fa-edit
+            </v-icon>
+          </v-btn>
           <v-btn
               color="error"
               small
@@ -81,7 +85,7 @@
 </template>
 
 <script>
-  import {ALL_COMMENTS, CREATE_COMMENT, DELETE_COMMENT} from "../constants/comment-graphql";
+  import {ALL_COMMENTS, CREATE_COMMENT, DELETE_COMMENT, UPDATE_COMMENT} from "../constants/comment-graphql";
 
   export default {
     name: "CreatePost",
@@ -105,7 +109,7 @@
       ],
       error: "desu",
       progress: false,
-      alertDisplay: false,
+      dialog: false,
     }),
     methods: {
       createComment: function () {
@@ -127,6 +131,7 @@
                 }
               }
             })
+            this.dialog = false
             this.progress = false
           }).catch((error) => {
             this.error = error
@@ -134,7 +139,7 @@
         }
       },
       deleteComment: function (id) {
-        if(!confirm('Are you sure you want to delete this comment?')) {
+        if (!confirm('Are you sure you want to delete this comment?')) {
           return
         }
         this.progress = true
@@ -142,6 +147,30 @@
           mutation: DELETE_COMMENT,
           variables: {
             id: id
+          }
+        }).then(() => {
+          this.$apollo.queries.comments.fetchMore({
+            updateQuery: (previousResult, {fetchMoreResult}) => {
+              return {
+                comments: fetchMoreResult.comments
+              }
+            }
+          })
+          this.progress = false
+        }).catch((error) => {
+          this.error = error
+        })
+      },
+      updateComment: function (item) {
+        let id = item.id
+        let title = item.title
+        let contents = item.contents
+        this.$apollo.mutate({
+          mutation: UPDATE_COMMENT,
+          variables: {
+            id: id,
+            title: title,
+            contents: contents
           }
         }).then(() => {
           this.$apollo.queries.comments.fetchMore({
@@ -166,6 +195,9 @@
           self.alertDisplay = false
         }, 3000);
       },
+      showDialog: function () {
+        this.dialog = true
+      }
     },
     apollo: {
       comments: ALL_COMMENTS
