@@ -25,6 +25,11 @@ const routes = [
     name: "CreateComment",
     component: () => import('./views/CreateComment.vue')
   },
+  {
+    path: '/infiniteScrollDemo',
+    name: "InfiniteScrollDemo",
+    component: () => import('./views/InfiniteScrollDemo.vue')
+  },
 ]
 
 const router = new VueRouter({

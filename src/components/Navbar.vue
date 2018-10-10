@@ -46,6 +46,15 @@
           </v-list-tile-action>
           <v-list-tile-title>createComment</v-list-tile-title>
         </v-list-tile>
+
+        <v-list-tile
+            to="/infiniteScrollDemo"
+        >
+          <v-list-tile-action>
+            <v-icon>fa-angle-double-down</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-title>infiniteScrollDemo</v-list-tile-title>
+        </v-list-tile>
       </v-list>
 
     </v-navigation-drawer>
