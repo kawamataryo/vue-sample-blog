@@ -33,7 +33,7 @@ export const FEACH_POST_BY_ID = gql`
 
 // ページ単位で取得
 export const FEACH_POST_BY_PAGE = gql`
-    query feachPostByPage($displayUnit: Int, $page: Int) {
+    query fetchPostByPage($displayUnit: Int, $page: Int) {
         posts(first: $displayUnit, skip: $page, orderBy: createdAt_DESC where: {status: PUBLISHED}) {
             id
             title
@@ -43,6 +43,7 @@ export const FEACH_POST_BY_PAGE = gql`
             thumbnail {
                 url
             }
+            __typename 
         }
     }
 `

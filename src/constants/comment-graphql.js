@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 // すべてのコメントを取得
 export const ALL_COMMENTS = gql`
-    query allComments {
+    query allCusto {
         comments(where: {status: PUBLISHED}) {
             id
             title
