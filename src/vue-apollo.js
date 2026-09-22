@@ -6,7 +6,7 @@ import { createApolloClient, restartWebsockets } from 'vue-cli-plugin-apollo/gra
 Vue.use(VueApollo)
 
 // Name of the localStorage item
-const AUTH_TOKEN = 'REMOVED_CREDENTIAL'
+const AUTH_TOKEN = 'apollo-token'
 
 // Http endpoint
 const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'http://localhost:4000/graphql'

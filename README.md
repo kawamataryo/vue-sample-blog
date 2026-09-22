@@ -36,3 +36,11 @@ yarn run build
 ```
 yarn run lint
 ```
+
+## Authentication configuration
+
+Copy `.env.example` to `.env.local` to configure the GraphQL endpoint.
+`apollo-token` is the localStorage item name; it is not an API credential.
+Supply a per-user, appropriately scoped token through `onLogin`, or use a
+public read-only endpoint. Never embed a shared CMS management token in source,
+`VUE_APP_*` environment variables, or the generated `dist` bundle.
